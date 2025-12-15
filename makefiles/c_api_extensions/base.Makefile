@@ -287,3 +287,10 @@ wasm_eh:
 
 wasm_threads:
 	DUCKDB_PLATFORM=wasm_threads make configure release move_wasm_extension
+
+#############################################
+### Extension Signing (optional)
+#############################################
+
+# Include signing targets if available
+-include $(dir $(lastword $(MAKEFILE_LIST)))signing.Makefile
