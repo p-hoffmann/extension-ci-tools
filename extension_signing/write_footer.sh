@@ -8,8 +8,6 @@ if [[ -z "${SCRIPT_DIR:-}" ]]; then
     source "${SCRIPT_DIR}/common.sh"
 fi
 
-readonly SIGNATURE_SIZE=256
-
 write_signature() {
     local extfile="$1" sigfile="$2"
 

@@ -8,9 +8,6 @@ if [[ -z "${SCRIPT_DIR:-}" ]]; then
     source "${SCRIPT_DIR}/common.sh"
 fi
 
-readonly CHUNK_SIZE=$((1024 * 1024))
-readonly SIGNATURE_SIZE=256
-
 # Compute two-level hash (excludes last 256 bytes for signature)
 compute_extension_hash() {
     local extfile="$1" outfile="${2:-}"

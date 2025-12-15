@@ -12,6 +12,22 @@ readonly EXIT_INVALID_EXTENSION=5
 readonly EXIT_KEY_GEN_FAILED=3
 readonly EXIT_SIGNATURE_INVALID=10
 
+# Extension footer constants
+readonly FOOTER_SIZE=512
+readonly SIGNATURE_SIZE=256
+readonly METADATA_SIZE=256
+readonly FIELD_SIZE=32
+readonly CHUNK_SIZE=$((1024 * 1024))
+
+# Metadata field offsets within the 512-byte footer
+# Fields are written in order: unused(0,32,64), abi(96), ext_ver(128), duckdb_ver(160), platform(192), magic(224)
+readonly OFFSET_ABI_TYPE=96
+readonly OFFSET_EXT_VERSION=128
+readonly OFFSET_DUCKDB_VERSION=160
+readonly OFFSET_PLATFORM=192
+readonly OFFSET_MAGIC=224
+readonly OFFSET_SIGNATURE=256
+
 if [[ -t 1 ]]; then
     readonly RED='\033[0;31m'
     readonly GREEN='\033[0;32m'
@@ -85,10 +101,10 @@ validate_extension() {
         error "Invalid extension" "$1 too small" "Expected >= 512 bytes"
         return $EXIT_INVALID_EXTENSION
     }
-    # Check magic byte '4' (0x34) at footer start
-    local magic=$(dd if="$1" bs=1 skip=$((filesize - 512)) count=1 2>/dev/null | xxd -p)
+    # Check magic byte '4' (0x34) at correct offset within footer
+    local magic=$(dd if="$1" bs=1 skip=$((filesize - FOOTER_SIZE + OFFSET_MAGIC)) count=1 2>/dev/null | xxd -p)
     [[ "$magic" == "34" ]] || {
-        error "Invalid extension" "Magic mismatch" "Not a valid .duckdb_extension"
+        error "Invalid extension" "Magic mismatch (got: $magic)" "Not a valid .duckdb_extension"
         return $EXIT_INVALID_EXTENSION
     }
 }

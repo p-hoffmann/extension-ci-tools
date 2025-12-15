@@ -8,11 +8,6 @@ if [[ -z "${SCRIPT_DIR:-}" ]]; then
     source "${SCRIPT_DIR}/common.sh"
 fi
 
-readonly FOOTER_SIZE=512
-readonly SIGNATURE_SIZE=256
-readonly METADATA_SIZE=256
-readonly FIELD_SIZE=32
-
 read_footer_field() {
     local extfile="$1" field_offset="$2"
     local filesize=$(get_file_size "$extfile")
@@ -27,12 +22,12 @@ read_footer_bytes() {
     dd if="$extfile" bs=1 skip=$offset count=$count 2>/dev/null
 }
 
-get_magic() { read_footer_field "$1" 0; }
-get_platform() { read_footer_field "$1" 32; }
-get_duckdb_version() { read_footer_field "$1" 64; }
-get_extension_version() { read_footer_field "$1" 96; }
-get_abi_type() { read_footer_field "$1" 128; }
-get_signature() { read_footer_bytes "$1" $METADATA_SIZE $SIGNATURE_SIZE; }
+get_magic() { read_footer_field "$1" $OFFSET_MAGIC; }
+get_platform() { read_footer_field "$1" $OFFSET_PLATFORM; }
+get_duckdb_version() { read_footer_field "$1" $OFFSET_DUCKDB_VERSION; }
+get_extension_version() { read_footer_field "$1" $OFFSET_EXT_VERSION; }
+get_abi_type() { read_footer_field "$1" $OFFSET_ABI_TYPE; }
+get_signature() { read_footer_bytes "$1" $OFFSET_SIGNATURE $SIGNATURE_SIZE; }
 
 has_signature() {
     local sig_hex=$(get_signature "$1" | xxd -p | tr -d '\n')
