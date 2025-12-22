@@ -55,13 +55,13 @@ ifeq ($(TARGET_DUCKDB_VERSION),)
 	TARGET_DUCKDB_VERSION = v0.0.1
 endif
 
-EXTENSION_FILENAME=$(EXTENSION_NAME).duckdb_extension
+EXTENSION_FILENAME=$(EXTENSION_NAME).trex
 EXTENSION_FILENAME_NO_METADATA=$(EXTENSION_LIB_FILENAME)
 
 DUCKDB_WASM_PLATFORM=$(filter wasm_mvp wasm_eh wasm_threads,$(DUCKDB_PLATFORM))
 
 ifneq ($(DUCKDB_WASM_PLATFORM),)
-	EXTENSION_FILENAME=$(EXTENSION_NAME).duckdb_extension.wasm
+	EXTENSION_FILENAME=$(EXTENSION_NAME).trex.wasm
 	EXTENSION_FILENAME_NO_METADATA=$(EXTENSION_NAME).no_metadata.wasm
 	EXTENSION_LIB_FILENAME=lib$(EXTENSION_NAME).a
 	EXTENSION_BUILD_PATH=./build/$(DUCKDB_WASM_PLATFORM)
@@ -112,8 +112,8 @@ configure/extension_version.txt:
 TEST_RUNNER=$(PYTHON_VENV_BIN) -m duckdb_sqllogictest
 
 TEST_RUNNER_BASE=$(TEST_RUNNER) --test-dir test/sql $(EXTRA_EXTENSIONS_PARAM)
-TEST_RUNNER_DEBUG=$(TEST_RUNNER_BASE) --external-extension build/debug/$(EXTENSION_NAME).duckdb_extension
-TEST_RUNNER_RELEASE=$(TEST_RUNNER_BASE) --external-extension build/release/$(EXTENSION_NAME).duckdb_extension
+TEST_RUNNER_DEBUG=$(TEST_RUNNER_BASE) --external-extension build/debug/$(EXTENSION_NAME).trex
+TEST_RUNNER_RELEASE=$(TEST_RUNNER_BASE) --external-extension build/release/$(EXTENSION_NAME).trex
 
 # By default latest duckdb is installed, set DUCKDB_TEST_VERSION to switch to a different version
 DUCKDB_PIP_INSTALL?=duckdb

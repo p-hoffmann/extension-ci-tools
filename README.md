@@ -1,4 +1,4 @@
-# Extension CI Tools for DuckDB
+# Extension CI Tools
 This repository contains reusable components for building, testing and deploying DuckDB extensions.
 
 DuckDB's [Extension Template](https://github.com/duckdb/extension-template/actions) and various DuckDB Extensions based on the template use this repository to deduplicate code for build configuration and easily update the extension repositories when changes occur to DuckDB's build system and/or CI.

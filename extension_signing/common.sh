@@ -104,7 +104,7 @@ validate_extension() {
     # Check magic byte '4' (0x34) at correct offset within footer
     local magic=$(dd if="$1" bs=1 skip=$((filesize - FOOTER_SIZE + OFFSET_MAGIC)) count=1 2>/dev/null | xxd -p)
     [[ "$magic" == "34" ]] || {
-        error "Invalid extension" "Magic mismatch (got: $magic)" "Not a valid .duckdb_extension"
+        error "Invalid extension" "Magic mismatch (got: $magic)" "Not a valid .trex"
         return $EXIT_INVALID_EXTENSION
     }
 }

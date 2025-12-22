@@ -3,7 +3,7 @@
 # Inputs (from base.Makefile):
 #   EXTENSION_NAME         : name of the extension (lower case)
 #   EXTENSION_BUILD_PATH   : build output path
-#   EXTENSION_FILENAME     : extension filename with .duckdb_extension suffix
+#   EXTENSION_FILENAME     : extension filename with .trex suffix
 #
 # Environment Variables:
 #   DUCKDB_SIGN_KEY        : path to private key file (.pem) for signing

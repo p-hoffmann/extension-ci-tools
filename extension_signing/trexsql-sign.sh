@@ -32,8 +32,8 @@ Options:
 
 Examples:
   trexsql-sign.sh keygen -o ~/my_signing_key
-  trexsql-sign.sh sign -k ~/my_signing_key.pem extension.duckdb_extension
-  trexsql-sign.sh verify -k ~/my_signing_key.pub extension.duckdb_extension
+  trexsql-sign.sh sign -k ~/my_signing_key.pem extension.trex
+  trexsql-sign.sh verify -k ~/my_signing_key.pub extension.trex
 EOF
 }
 

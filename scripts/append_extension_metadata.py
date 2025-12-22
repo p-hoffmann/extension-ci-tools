@@ -46,7 +46,7 @@ def main():
 
     args = arg_parser.parse_args()
 
-    OUTPUT_FILE = args.out_file if args.out_file else args.extension_name + '.duckdb_extension'
+    OUTPUT_FILE = args.out_file if args.out_file else args.extension_name + '.trex'
     OUTPUT_FILE_TMP = OUTPUT_FILE + ".tmp"
 
     print("Creating extension binary:")
