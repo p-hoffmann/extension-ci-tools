@@ -34,7 +34,7 @@ compute_extension_hash() {
         local remaining=$((content_size - offset))
         [[ $remaining -lt $CHUNK_SIZE ]] && chunk_bytes=$remaining
 
-        dd if="$extfile" bs=1 skip=$offset count=$chunk_bytes 2>/dev/null | \
+        dd if="$extfile" bs=$CHUNK_SIZE iflag=skip_bytes,count_bytes skip=$offset count=$chunk_bytes 2>/dev/null | \
             openssl dgst -binary -sha256 >> "$hash_concat"
 
         offset=$((offset + chunk_bytes))
